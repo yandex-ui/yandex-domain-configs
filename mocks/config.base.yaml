@@ -1,0 +1,12 @@
+foo:
+  bar: 5
+  qux: 6
+domains:
+  def:
+    foo:
+      bar: 7
+      baz: 8
+  ghi:
+    base: def
+    foo:
+      bar: 9

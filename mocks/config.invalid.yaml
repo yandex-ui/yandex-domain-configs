@@ -1,0 +1,5 @@
+domainList:
+  - abc
+domains:
+  abc:
+    bar: 3

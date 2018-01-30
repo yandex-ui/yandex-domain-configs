@@ -1,0 +1,18 @@
+base: config.base.yaml
+foo:
+  bar: 1
+  baz: 2
+domainList:
+  - abc
+  - def
+  - ghi
+domains:
+  abc:
+    foo:
+      bar: 3
+  def:
+    foo:
+      bar: 4
+  xyz:
+    foo:
+      bar: 0

@@ -1,0 +1,45 @@
+{
+  "name": "yandex-domain-configs",
+  "description": "Yandex Domain Configs",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": {
+    "name": "Azat Razetdinov",
+    "email": "razetdinov@gmail.com",
+    "url": "https://github.com/razetdinov"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.yandex-team.ru:Daria/yandex-domain-configs.git"
+  },
+  "files": [
+    "cli.js"
+  ],
+  "bin": "./cli.js",
+  "dependencies": {
+    "commander": "2.13.0",
+    "js-yaml": "3.10.0",
+    "lodash": "4.17.4",
+    "ministyle": "0.1.4",
+    "miniwrite": "0.1.4",
+    "tv4": "1.3.0",
+    "tv4-reporter": "1.0.0"
+  },
+  "optionalDependencies": {
+    "chai": "4.1.2",
+    "eslint": "4.4.0",
+    "eslint-config-yandex-personal": "0.0.1",
+    "eslint-plugin-jsdoc": "3.3.1",
+    "husky": "0.14.3",
+    "mocha": "5.0.0",
+    "nyc": "11.4.1"
+  },
+  "scripts": {
+    "coverage": "nyc mocha -R dot",
+    "lint": "eslint .",
+    "precommit": "yarn lint",
+    "prepush": "nyc --check-coverage mocha -R dot",
+    "test": "mocha",
+    "test-watch": "mocha --watch"
+  }
+}

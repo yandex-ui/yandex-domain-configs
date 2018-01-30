@@ -81,16 +81,20 @@ title: Project configuration
 type: object
 required:
   - foo
+  - bar
 properties:
   foo:
     title: Foo description
+    type: integer
+  bar:
+    title: Bar description
     type: object
     required:
-      - bar
+      - baz
     properties:
-      bar:
-        title: Bar description
-        type: string
+      baz:
+        title: Baz description
+        type: integer
 ```
 
 ## Command

@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.yandex-team.ru:Daria/yandex-domain-configs.git"
+    "url": "https://github.com/yandex-ui/yandex-domain-configs"
   },
   "files": [
     "cli.js"

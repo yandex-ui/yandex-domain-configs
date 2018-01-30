@@ -10,15 +10,23 @@ Tool for generating static domain configs.
 4. Customizing domain list for different environments.
 
 ## Installation
-
+npm:
 ```
 npm install --save-dev yandex-domain-configs
 ```
+yarn:
+```
+yarn add -D yandex-domain-configs
+```
 
 ## Usage
-
+npm:
 ```
-npm run yandex-domain-configs [options]
+node_modules/.bin/yandex-domain-configs [options]
+```
+yarn:
+```
+yarn yandex-domain-configs -- [options]
 ```
 
 
@@ -87,7 +95,7 @@ properties:
 
 ## Command
 ```
-npm run yandex-domain-configs -i config.production.xml -o production -s config.schema.yaml
+yarn yandex-domain-configs -- -i config.production.xml -o production -s config.schema.yaml
 ```
 
 ## Result

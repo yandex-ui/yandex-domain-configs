@@ -7,6 +7,8 @@ const _ = require('lodash');
 const path = require('path');
 const yaml = require('js-yaml');
 const assert = require('assert');
+const deepExtend = require('deep-extend');
+
 const out = require('miniwrite').log();
 const style = require('ministyle').ansi();
 const reporter = require('tv4-reporter').getReporter(out, style);
@@ -56,7 +58,7 @@ function getConfigs(filename) {
         // Inherit domain configs one from another.
         const domainConfig = inheritConfig((domain) => domains[domain], domain);
         // Merge with default settings.
-        configs[domain] = _.merge({}, config, domainConfig);
+        configs[domain] = deepExtend({}, config, domainConfig);
         return configs;
     }, []);
 }
@@ -121,7 +123,7 @@ function inheritConfig(getter, key, resolver) {
             return inheritConfig(getter, parentKey, resolver);
         });
         // Merge settings from all the parents and config itself.
-        config = _.merge.apply(_, [ {} ].concat(parents, config));
+        config = deepExtend.apply(null, [].concat({}, parents, config));
         // Delete utility field.
         delete config[EXTENDS_KEY];
     }

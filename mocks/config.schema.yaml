@@ -2,9 +2,16 @@ type: object
 required:
   - foo
 properties:
+  arr:
+    type: array
+    items:
+      type: integer
   foo:
     type: object
     properties:
-      bar: integer
-      baz: integer
-      qux: integer
+      bar:
+        type: integer
+      baz:
+        type: integer
+      qux:
+        type: integer

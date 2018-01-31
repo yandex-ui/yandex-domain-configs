@@ -1,4 +1,5 @@
 $extends: config.base.yaml
+arr: [4, 5]
 foo:
   bar: 1
   baz: 2

@@ -41,6 +41,7 @@ describe('yandex-domain-configs', () => {
     it('correctly inherits configs', () => {
         const result = run('mocks/config.yaml');
         expect(result.status).to.equal(0);
+        expect(load('./temp/abc.json').arr).to.deep.equal([ 4, 5 ]);
         expect(load('./temp/abc.json').foo.bar).to.equal(3);
         expect(load('./temp/abc.json').foo.baz).to.equal(2);
         expect(load('./temp/abc.json').foo.qux).to.equal(3);

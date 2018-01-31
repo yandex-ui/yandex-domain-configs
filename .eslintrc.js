@@ -10,6 +10,9 @@ module.exports = {
     env: {
         node: true
     },
+    rules: {
+        'prefer-spread': 'off' // node.js 4
+    },
     overrides: [
         {
             files: '**/*.spec.js',
@@ -18,6 +21,9 @@ module.exports = {
             },
             globals: {
                 expect: true
+            },
+            rules: {
+                'no-unused-expressions': 'off'
             }
         }
     ]

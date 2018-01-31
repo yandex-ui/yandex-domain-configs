@@ -1,0 +1,11 @@
+foo:
+  bar: 1
+$domainList:
+  - abc
+$domains:
+  abc:
+    foo:
+      bar: 2
+  def:
+    foo:
+      bar: 3

@@ -49,28 +49,28 @@ foo: 0
 bar:
   baz: 1
 # domain settings override the default ones
-domains:
+$domains:
   yandex.ru
     foo: 2
   yandex.com
     # yandex.com will inherit settings from yandex.ru
-    base: yandex.ru
+    $extends: yandex.ru
     bar:
       baz: 3
 ```
 
 `config.production.yaml`:
 ```yaml
-base: config.base.yaml
+$extends: config.base.yaml
 # these settings override the default ones in the base config
 bar:
   baz: 5
 # domains not listed here will be ignored
-domainList:
+$domainList:
   - yandex.ru
   - yandex.com
 # these settings override domain settings in the base config
-domains:
+$domains:
   yandex.ru
     foo: 6
 ```

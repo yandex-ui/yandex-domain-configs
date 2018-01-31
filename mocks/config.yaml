@@ -1,18 +1,12 @@
-base: config.base.yaml
+$extends: config.base.yaml
 foo:
   bar: 1
   baz: 2
-domainList:
-  - abc
-  - def
-  - ghi
-domains:
+$domains:
   abc:
     foo:
       bar: 3
+      qux: 3
   def:
     foo:
       bar: 4
-  xyz:
-    foo:
-      bar: 0

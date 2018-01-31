@@ -1,12 +1,14 @@
 foo:
   bar: 5
   qux: 6
-domains:
+$domains:
   def:
     foo:
       bar: 7
       baz: 8
   ghi:
-    base: def
+    $extends:
+      - abc
+      - def
     foo:
       bar: 9

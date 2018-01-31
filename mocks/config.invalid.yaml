@@ -1,5 +1,5 @@
-domainList:
+$domainList:
   - abc
-domains:
+$domains:
   abc:
     bar: 3

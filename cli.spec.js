@@ -19,6 +19,10 @@ describe('yandex-domain-configs', () => {
         });
     }
 
+    function load(filename) {
+        return JSON.parse(fs.readFileSync(filename, 'utf8'));
+    }
+
     afterEach(() => {
         if (fs.existsSync(outputDir)) {
             fs.readdirSync(outputDir).forEach((filename) => {
@@ -37,15 +41,22 @@ describe('yandex-domain-configs', () => {
     it('correctly inherits configs', () => {
         const result = run('mocks/config.yaml');
         expect(result.status).to.equal(0);
-        expect(require('./temp/abc.json').foo.bar).to.equal(3);
-        expect(require('./temp/abc.json').foo.baz).to.equal(2);
-        expect(require('./temp/abc.json').foo.qux).to.equal(6);
-        expect(require('./temp/def.json').foo.bar).to.equal(4);
-        expect(require('./temp/def.json').foo.baz).to.equal(8);
-        expect(require('./temp/def.json').foo.qux).to.equal(6);
-        expect(require('./temp/ghi.json').foo.bar).to.equal(9);
-        expect(require('./temp/ghi.json').foo.baz).to.equal(8);
-        expect(require('./temp/ghi.json').foo.qux).to.equal(6);
+        expect(load('./temp/abc.json').foo.bar).to.equal(3);
+        expect(load('./temp/abc.json').foo.baz).to.equal(2);
+        expect(load('./temp/abc.json').foo.qux).to.equal(3);
+        expect(load('./temp/def.json').foo.bar).to.equal(4);
+        expect(load('./temp/def.json').foo.baz).to.equal(8);
+        expect(load('./temp/def.json').foo.qux).to.equal(6);
+        expect(load('./temp/ghi.json').foo.bar).to.equal(9);
+        expect(load('./temp/ghi.json').foo.baz).to.equal(8);
+        expect(load('./temp/ghi.json').foo.qux).to.equal(3);
+    });
+
+    it('ignores domains absent in domainList', () => {
+        const result = run('mocks/config.domainList.yaml');
+        expect(result.status).to.equal(0);
+        expect(load('./temp/abc.json').foo.bar).to.equal(2);
+        expect(fs.existsSync('./temp/def.json')).to.be.false;
     });
 
     it('returns error if config is invalid', () => {

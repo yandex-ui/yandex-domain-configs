@@ -11,6 +11,11 @@ const out = require('miniwrite').log();
 const style = require('ministyle').ansi();
 const reporter = require('tv4-reporter').getReporter(out, style);
 
+const TAB = '   ';
+const DOMAIN_LIST_KEY = '$domainList';
+const DOMAINS_KEY = '$domains';
+const EXTENDS_KEY = '$extends';
+
 const options = require('commander')
     .option('-i, --input <filename>', 'Input file')
     .option('-o, --output-dir <dirname>', 'Output directory')
@@ -33,15 +38,19 @@ if (reports.length) {
  */
 function getConfigs(filename) {
     const config = inheritConfig(loadConfig, filename, resolvePath);
-    const domainList = config.domainList;
-    const domains = config.domains;
 
-    // Delete utility fields.
-    delete config.domainList;
-    delete config.domains;
+    const domains = config[DOMAINS_KEY];
+    assert(_.isObjectLike(domains), '"$domains" must be an object');
+    // Delete utility field.
+    delete config[DOMAINS_KEY];
 
-    assert(Array.isArray(domainList), '"domainList" must be an array');
-    assert(_.isObjectLike(domains), '"domains" must be an object');
+    let domainList = config[DOMAIN_LIST_KEY];
+    if (domainList) {
+        assert(Array.isArray(domainList), '"$domainList" must be an array');
+        delete config[DOMAIN_LIST_KEY];
+    } else {
+        domainList = Object.keys(domains);
+    }
 
     return domainList.reduce((configs, domain) => {
         // Inherit domain configs one from another.
@@ -84,7 +93,7 @@ function writeConfigs(configs, outputDir) {
     }
 
     for (const domain in configs) {
-        const json = JSON.stringify(configs[domain], null, ' '.repeat(4));
+        const json = JSON.stringify(configs[domain], null, TAB);
         const filename = path.resolve(outputDir, `${domain}.json`);
         fs.writeFileSync(filename, json, 'utf8');
     }
@@ -103,12 +112,18 @@ function inheritConfig(getter, key, resolver) {
 
     assert(config, `Config '${key}' not found`);
 
-    if (config.base) {
-        const baseKey = (resolver || String)(config.base, key);
-        const baseConfig = inheritConfig(getter, baseKey, resolver);
-        config = _.merge({}, baseConfig, config);
+    if (config[EXTENDS_KEY]) {
+        const parentKeys = [].concat(config[EXTENDS_KEY]);
+        const parents = parentKeys.map((parentKey) => {
+            if (resolver) {
+                parentKey = resolver(key, parentKey);
+            }
+            return inheritConfig(getter, parentKey, resolver);
+        });
+        // Merge settings from all the parents and config itself.
+        config = _.merge.apply(_, [ {} ].concat(parents, config));
         // Delete utility field.
-        delete config.base;
+        delete config[EXTENDS_KEY];
     }
 
     return config;
@@ -127,10 +142,10 @@ function loadConfig(filename) {
 /**
  * Resolves relative configs paths.
  *
- * @param {String} filename - Relative path.
  * @param {String} baseFilename - Base path.
+ * @param {String} filename - Relative path.
  * @returns {String} - Absolute path.
  */
-function resolvePath(filename, baseFilename) {
+function resolvePath(baseFilename, filename) {
     return path.resolve(path.dirname(baseFilename), filename);
 }

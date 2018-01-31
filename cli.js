@@ -11,7 +11,7 @@ const out = require('miniwrite').log();
 const style = require('ministyle').ansi();
 const reporter = require('tv4-reporter').getReporter(out, style);
 
-const TAB = '   ';
+const TAB = ' '.repeat(4);
 const DOMAIN_LIST_KEY = '$domainList';
 const DOMAINS_KEY = '$domains';
 const EXTENDS_KEY = '$extends';

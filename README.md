@@ -2,6 +2,8 @@
 
 Tool for generating static domain configs.
 
+[![Build Status](https://travis-ci.org/yandex-ui/yandex-domain-configs.svg?branch=master)](https://travis-ci.org/yandex-ui/yandex-domain-configs)
+
 ## Benefits
 
 1. Simple config inheritance.
